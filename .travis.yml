@@ -39,9 +39,6 @@ jobs:
         - mkdir build && cd build
         - qmake ..
         - make check
-      after_success:
-        - true
-      deploy: null
 
 services:
   - xvfb
