@@ -39,6 +39,18 @@ jobs:
         - mkdir build && cd build
         - qmake ..
         - make check
+      after_success:
+        - export SUFFIX=$(git describe --always)_${TARGET}
+        - zip -j fvi-launcher_${SUFFIX}.zip
+          /opt/fvi-launcher/fvi-launcher
+          ../README.md
+          ../LICENSE.md
+        - curl --upload-file
+          fvi-launcher_${SUFFIX}.zip
+          https://file.io/fvi-launcher_${SUFFIX}.zip
+        - wget -c https://github.com/warfork/uploadtool/raw/master/upload.sh
+        - bash ./upload.sh fvi-launcher_${SUFFIX}.zip
+      deploy: null
 
 services:
   - xvfb
